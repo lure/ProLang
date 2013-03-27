@@ -37,9 +37,7 @@ fun dates_in_months(dxs:(int*int*int)list, mxs: int list) =
 
 (* 6 *)
 fun get_nth(xs: string list, pos: int)=
-    if pos < 1 orelse null xs
-    then hd []
-    else if pos = 1
+    if pos = 1
     then hd xs
     else get_nth(tl xs, pos-1)
 
@@ -49,7 +47,7 @@ fun date_to_string (date: (int*int*int)) =
 
 (* 8 *)
 fun number_before_reaching_sum(sum: int, xs: int list)=
-    if (sum - hd xs) <= 0
+    if (sum <= hd xs)
     then 0
     else 1 + number_before_reaching_sum(sum - hd xs, tl xs)
 
@@ -59,7 +57,15 @@ fun what_month(day_of_the_year: int) =
     then 0
     else number_before_reaching_sum(day_of_the_year, days_in_month)+1
 				     
-(* 10 *)
+(* 10 
+What Dan wants here is to use what_month with recursion. Something like 
+    fun month_range (day1: int, day2: int) =
+    if day1 > day2
+    then []
+    else what_month day1 :: month_range(day1 + 1, day2)
+What I am doing here is to exclude some internal recursion in exchange of somewhat unreadable code. =)
+Don't try it at home.
+*)
 fun month_range(day1: int, day2: int) =
     if day1 > day2 orelse day1 < 1 orelse day2 > 365
     then []
